@@ -56,10 +56,19 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile) {
+  
+  $ionicLoading.show({
+    content: 'Loading',
+    animation: 'fade-in',
+    showBackdrop: true,
+    maxWidth: 200,
+    showDelay: 0
+  });
+
   navigator.geolocation.getCurrentPosition(function(pos) {
     var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
        var mapOptions = {
-           streetViewControl: true,
+           disableDefaultUI: true,
            center: myLatlng,
            zoom: 16,
            mapTypeId: google.maps.MapTypeId.TERRAIN
@@ -73,6 +82,7 @@ angular.module('starter.controllers', ['ionic'])
            map: map
        });
        $scope.map = map;
+       $ionicLoading.hide();
      }, function(error) {
        alert('Unable to get location: ' + error.message);
      });
