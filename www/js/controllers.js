@@ -56,20 +56,24 @@ angular.module('starter.controllers', ['ionic'])
 })
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile) {
-  var myLatlng = new google.maps.LatLng(43.07493, -89.381388);
-     var mapOptions = {
-         streetViewControl: true,
-         center: myLatlng,
-         zoom: 16,
-         mapTypeId: google.maps.MapTypeId.TERRAIN
-     };
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+       var mapOptions = {
+           streetViewControl: true,
+           center: myLatlng,
+           zoom: 16,
+           mapTypeId: google.maps.MapTypeId.TERRAIN
+       };
 
-     var map = new google.maps.Map(document.getElementById('map'),
-         mapOptions);
+       var map = new google.maps.Map(document.getElementById('map'),
+           mapOptions);
 
-     var marker = new google.maps.Marker({
-         position: myLatlng,
-         map: map
+       var marker = new google.maps.Marker({
+           position: myLatlng,
+           map: map
+       });
+       $scope.map = map;
+     }, function(error) {
+       alert('Unable to get location: ' + error.message);
      });
-     $scope.map = map;
 });
