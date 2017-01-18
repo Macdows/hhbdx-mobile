@@ -29,3 +29,140 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .scroll {
  height: 100%;
 }
+
+.listButton {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  color: black;
+}
+
+
+.image img {
+  width : 50px !important;
+  height: 50px !important;
+}
+
+.data .col h4 {
+  margin-top: 23px;
+}
+
+.barsPopup .popup-head {
+  display: none;
+}
+
+.settings {
+  text-align: right;
+}
+
+.settings .right{
+  text-align: right;
+}
+
+.rightData {
+  text-align: right;
+}
+
+.rightData img{
+  width : 10px !important;
+  height: 10px !important;
+}
+.center{
+  text-align: center;
+}
+
+.overview{
+  margin-top : 10px;
+  margin-bottom: 10px;
+}
+
+.menuPub{
+  max-height: 300px;
+}
+
+.price{
+  text-align: center;
+}
+
+.scroll-bar-indicator
+{
+	display: none;
+}
+
+.linkButtonBar * {
+  text-align: center;
+}
+
+.linkButtonBar .button {
+  height : 75px;
+}
+
+.filters{
+    background-color: lightgray;
+}
+
+.filters *{
+  text-align: center;
+  font-weight: bold;
+}
+
+
+.scroll {
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.scroll {
+  height: 100%;
+}
+
+.labels {
+ color: black;
+ font-family: "Lucida Grande", "Arial", sans-serif;
+ font-size: 20px;
+ text-align: center;
+ width: 80px;
+ white-space: nowrap;
+}
+
+.popup {
+  width: 90% !important;
+  height: 80%;
+}
+
+.popup-buttons{
+  position: absolute;
+  bottom: 5px;
+}
+
+.item-content {
+  padding-right: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.data h3 {
+  margin-bottom: 5px;
+  position: absolute;
+  bottom: 20%;
+}
+
+.data .item-content {
+  padding-bottom : 5px;
+}
+
+.popup-showing .active {
+  z-index: 10;
+}
+.popover-backdrop{
+    opacity: 1;
+    z-index: 20;
+}
