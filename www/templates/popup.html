@@ -3,9 +3,8 @@
     <a class="right button button-clear ion-ios-settings-strong button-dark"  ng-click="popover.show($event)"></a>
   </div>
 </div>
-</div>
 <div class="list ">
-  <ion-item ui-sref='pub({pubId: pub.id})' ng-repeat="pub in pubs | filter:searchQuery | filter:search.type1 | filter:search.type2 | filter:search.type3 | distFilter:distMax" class="item item-thumbnail-left">
+  <ion-item ui-sref="pub({pubId: pub.id})" ng-repeat="pub in pubs | filter:searchQuery | filter:search.type1 | filter:search.type2 | filter:search.type3 | distFilter:distMax" class="item item-thumbnail-left">
     <img src="{{pub.image}}" />
     <div class="row data">
       <div class="col col-80 leftData">
@@ -19,27 +18,3 @@
     </div>
   </ion-item>
 </div>
-
-<script id="templates/popover.html" type="text/ng-template">
-  <ion-popover-view>
-    <ion-content>
-      <div class="list">
-        <a class="item" href="http://learn.ionicframework.com/" target="_blank">
-          Learn Ionic
-        </a>
-        <a class="item" href="http://ionicframework.com/docs/" target="_blank">
-          Documentation
-        </a>
-        <a class="item" href="http://showcase.ionicframework.com/" target="_blank">
-          Showcase
-        </a>
-        <a class="item" href="http://ionicframework.com/submit-issue/" target="_blank">
-          Submit an Issue
-        </a>
-        <a class="item" href="https://github.com/driftyco/ionic" target="_blank">
-          Github Repo
-        </a>
-      </div>
-    </ion-content>
-  </ion-popover-view>
-</script>
