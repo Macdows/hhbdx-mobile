@@ -149,13 +149,13 @@ angular.module('starter.controllers', ['ionic'])
     rating: [4.6, 3.9]
   }];
 
-  $ionicPopover.fromTemplateUrl('templates/popover.html', {
+  /* $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
 
       console.log("coucou");
       $scope.popover = popover;
-    });
+    }); */
 
   // Triggered on a button click, or some other target
   $scope.showInfo = function() {
@@ -166,10 +166,7 @@ angular.module('starter.controllers', ['ionic'])
     templateUrl: "templates/popup.html",
     title: 'Bars',
     cssClass: 'barsPopup',
-    scope: $scope,
-    buttons: [
-      { text: 'Cancel' }
-    ]
+    scope: $scope
   });
   ClosePopupService.register(myPopup);
   };

@@ -68,9 +68,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   };
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
+  $ionicConfigProvider.navBar.alignTitle('center');
+
+  $stateProvider
     .state('app', {
     url: '/app',
     abstract: true,

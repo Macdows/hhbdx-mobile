@@ -1,8 +1,8 @@
-<div class="popup_header">
+<!-- div class="popup_header">
   <div class="settings">
     <a class="right button button-clear ion-ios-settings-strong button-dark"  ng-click="popover.show($event)"></a>
   </div>
-</div>
+</div -->
 <div class="list ">
   <ion-item ui-sref="pub({pubId: pub.id})" ng-repeat="pub in pubs | filter:searchQuery | filter:search.type1 | filter:search.type2 | filter:search.type3 | distFilter:distMax" class="item item-thumbnail-left">
     <img src="{{pub.image}}" />
