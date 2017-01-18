@@ -158,7 +158,7 @@ angular.module('starter.controllers', ['ionic'])
     }); */
 
   // Triggered on a button click, or some other target
-  $scope.showInfo = function() {
+  $scope.showPubs = function() {
   $scope.data = {};
 
   // An elaborate, custom popup
