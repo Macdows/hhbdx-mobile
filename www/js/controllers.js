@@ -90,6 +90,10 @@ angular.module('starter.controllers', ['ionic'])
     image: "img/mushroom.jpg",
     mainDrinkType: "Beer",
     secondDrinkType: "Cocktail",
+    position: {
+      lat: 44.84057,
+      lng: -0.58149
+    },
     rating: [4.2]
   }, {
     id: 2,
@@ -102,6 +106,10 @@ angular.module('starter.controllers', ['ionic'])
     image: "img/camelot.jpg",
     mainDrink: "Cocktail",
     secondDrinkType: "Beer",
+    position: {
+      lat: 44.83237,
+      lng: -0.57107
+    },
     rating: [3.8]
   }, {
     id: 3,
@@ -114,6 +122,10 @@ angular.module('starter.controllers', ['ionic'])
     image: "img/titi.jpg",
     mainDrink: "Beer",
     secondDrinkType: "Wine",
+    position: {
+      lat: 44.83175,
+      lng: -0.56963
+    },
     rating: [4.6, 3.9]
   }];
 
