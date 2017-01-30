@@ -152,9 +152,16 @@ angular.module('starter.controllers', ['ionic'])
     ClosePopupService.register(myPopup);
   };
 
+      google.maps.Map.prototype.clearMarkers = function() {
+      for(var i=0; i < this.markers.length; i++){
+          this.markers[i].setMap(null);
+      }
+      this.markers = new Array();
+    };
+
 
    $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-    var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+       var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
        var mapOptions = {
            disableDefaultUI: true,
            center: myLatlng,
@@ -163,36 +170,87 @@ angular.module('starter.controllers', ['ionic'])
        };
 
        $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+       $scope.markers = [];
 
-       var marker = new google.maps.Marker({
+       var myPosition = new google.maps.Marker({
            position: myLatlng,
            map: $scope.map,
            icon: "../img/blue_dot.png"
        });
 
-        //Wait until the map is loaded
-        google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-
-          for (var i = 0; i < $scope.pubs.length; i++) {
-            console.log(i);
-            var marker = new google.maps.Marker({
-              map: $scope.map,
-              animation: google.maps.Animation.DROP,
-              position: $scope.pubs[i].position
-            });
-            //On Click go to pub page TODO=>Pub Pages
-            /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function() {
-                $state.go('pub', ({
-                  "pubId": $scope.pubs[i].id
-                }));
-              }
-            })(marker, i));*/
-          }
-        });
+        drawPubs();
 
        //$ionicLoading.hide();
      }, function(error) {
        alert('Unable to get location: ' + error.message);
      });
+
+     function drawPubs(){
+       //Wait until the map is loaded
+       google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+         for (var i = 0; i < $scope.pubs.length; i++) {
+           console.log(i);
+           var marker = new google.maps.Marker({
+             map: $scope.map,
+             position: $scope.pubs[i].position
+           });
+           $scope.markers.push(marker);
+           setMapOnAll($scope.map);
+           //On Click go to pub page TODO=>Pub Pages
+           /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
+             return function() {
+               $state.go('pub', ({
+                 "pubId": $scope.pubs[i].id
+               }));
+             }
+           })(marker, i));*/
+         }
+       });
+     }
+
+     $scope.refreshPubs = function() {
+
+         clearMarkers();
+         for (var i = 0; i < $scope.pubs.length; i++) {
+           console.log(i);
+           var marker = new google.maps.Marker({
+             map: $scope.map,
+             position: $scope.pubs[i].position
+           });
+           $scope.markers.push(marker);
+           setMapOnAll($scope.map);
+           //On Click go to pub page TODO=>Pub Pages
+           /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
+             return function() {
+               $state.go('pub', ({
+                 "pubId": $scope.pubs[i].id
+               }));
+             }
+           })(marker, i));*/
+         }
+     }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+      for (var i = 0; i < $scope.markers.length; i++) {
+        $scope.markers[i].setMap(map);
+      }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+      setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+      setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+      clearMarkers();
+      $scope.markers = [];
+}
+
 });
