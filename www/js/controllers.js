@@ -55,7 +55,7 @@ angular.module('starter.controllers', ['ionic'])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $ionicPopover, ClosePopupService) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
 
   /*$ionicLoading.show({
     content: 'Loading',
@@ -64,6 +64,11 @@ angular.module('starter.controllers', ['ionic'])
     maxWidth: 200,
     showDelay: 0
   });*/
+
+  var options = {
+     timeout: 10000,
+     enableHighAccuracy: true
+   };
 
   $scope.showFilter = false;
   $scope.distMax = 2500;
@@ -75,43 +80,6 @@ angular.module('starter.controllers', ['ionic'])
   };
 
   $scope.pubs = [{
-    id: 1,
-    name: "Mushroom",
-    distance: 450,
-    location: "Gambetta",
-    happyStart: 17,
-    happyEnd: 20,
-    price: 3.50,
-    image: "img/mushroom.jpg",
-    mainDrinkType: "Beer",
-    secondDrinkType: "Cocktail",
-    rating: [4.2]
-  }, {
-    id: 2,
-    name: "Camelot",
-    distance: 1535,
-    location: "La Victoire",
-    happyStart: 17.30,
-    happyEnd: 19,
-    price: 3.50,
-    image: "img/camelot.jpg",
-    mainDrink: "Cocktail",
-    secondDrinkType: "Beer",
-    rating: [3.8]
-  }, {
-    id: 3,
-    name: "Titi Twister",
-    distance: 1475,
-    location: "La Victoire",
-    happyStart: 18,
-    happyEnd: 21,
-    price: 3.50,
-    image: "img/titi.jpg",
-    mainDrink: "Beer",
-    secondDrinkType: "Wine",
-    rating: [4.6, 3.9]
-  },
-  {
     id: 1,
     name: "Mushroom",
     distance: 450,
@@ -159,21 +127,22 @@ angular.module('starter.controllers', ['ionic'])
 
   // Triggered on a button click, or some other target
   $scope.showPubs = function() {
-  $scope.data = {};
+    $scope.data = {};
 
-  // An elaborate, custom popup
-  var myPopup = $ionicPopup.show({
-    templateUrl: "templates/popup.html",
-    title: 'Bars',
-    cssClass: 'barsPopup',
-    scope: $scope
-  });
-  ClosePopupService.register(myPopup);
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      templateUrl: "templates/popup.html",
+      title: 'Bars',
+      cssClass: 'barsPopup',
+      scope: $scope
+    });
+
+    ClosePopupService.register(myPopup);
   };
 
 
-  navigator.geolocation.getCurrentPosition(function(pos) {
-    var myLatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+    var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
        var mapOptions = {
            disableDefaultUI: true,
            center: myLatlng,
@@ -181,14 +150,35 @@ angular.module('starter.controllers', ['ionic'])
            mapTypeId: google.maps.MapTypeId.TERRAIN
        };
 
-       var map = new google.maps.Map(document.getElementById('map'),
-           mapOptions);
+       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
        var marker = new google.maps.Marker({
            position: myLatlng,
-           map: map
+           map: $scope.map,
+           icon: "../img/blue_dot.png"
        });
-       $scope.map = map;
+
+        //Wait until the map is loaded
+        google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+
+          for (var i = 0; i < $scope.pubs.length; i++) {
+            console.log(i);
+            var marker = new google.maps.Marker({
+              map: $scope.map,
+              animation: google.maps.Animation.DROP,
+              position: $scope.pubs[i].position
+            });
+            //On Click go to pub page TODO=>Pub Pages
+            /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                $state.go('pub', ({
+                  "pubId": $scope.pubs[i].id
+                }));
+              }
+            })(marker, i));*/
+          }
+        });
+
        //$ionicLoading.hide();
      }, function(error) {
        alert('Unable to get location: ' + error.message);
