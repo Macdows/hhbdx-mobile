@@ -162,7 +162,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .popup-showing .active {
   z-index: 10;
 }
-.popover-backdrop{
-    opacity: 1;
-    z-index: 20;
+
+.side-bar-element{
+  width: 100%;
+  text-align: center;
+}
+
+.side-bar-element h2{
+  margin: 5px;
+}
+
+.side-bar-element img{
+  margin: -5px;
 }

@@ -13,27 +13,25 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
-    </ion-header-bar>
     <ion-content>
-      <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
-        <ion-item menu-close href="#/app/map">
-          Map
-        </ion-item>
-      </ion-list>
+      <div class="side-bar-element login" menu-close ng-click="login()">
+        <a>
+          <img src="../img/login.png" alt="login">
+        </a>
+        <h2>Connexion</h2>
+      </div>
+      <div class="side-bar-element ">
+        <a>
+          <img src="../img/settings.png" alt="login">
+        </a>
+        <h2>Réglages</h2>
+      </div>
+      <div class="side-bar-element favourite">
+        <a>
+          <img src="../img/favourite.png" alt="login">
+        </a>
+        <h2>Favoris</h2>
+      </div>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
