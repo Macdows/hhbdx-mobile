@@ -1,0 +1,85 @@
+
+<ion-view>
+<ion-content>
+<div class="row overview">
+<div class="img-left col-33">
+  <img src="../img/titi.jpg" alt="" width="100%" height="100%"/>
+</div>
+<div class="center col col-67">
+  <h2>{{pub.name}}</h2>
+  <h2>Happy Hour : {{pub.happyStart}}H - {{pub.happyEnd}}H</h2>
+  <h2> à {{pub.distance}} m </h2>
+</div>
+</div>
+  <div class="list list-inset">
+    <div class="item item-divider" ng-click="hideOnClick()">
+      <div class="row">
+        <div class="col col-60">
+          <h2>Bières</h2>
+        </div>
+        <div class="col col-20 price">
+          <h2>Demie</h2>
+        </div>
+        <div class="col col-20 price">
+          <h2>Pinte</h2>
+        </div>
+      </div>
+    </div>
+  <ion-item ng-repeat="item in menuBeer" class="item" ng-hide="hideDrinks">
+    <div class="row">
+      <div class="col col-60">
+        <h2>{{item.name}}</h2>
+      </div>
+      <div class="col col-20 price">
+        <h2>{{item.demie}}€</h2>
+      </div>
+      <div class="col col-20 price">
+        <h2>{{item.pinte}}€</h2>
+      </div>
+    </div>
+  </ion-item>
+
+    <div class="item item-divider"  ng-click='hideOnClick()'>
+      <div class="row">
+        <div class="col col-75">
+          <h2>Cocktails</h2>
+        </div>
+        <div class="col col-25 price">
+          <h2>Prix</h2>
+        </div>
+      </div>
+    </div>
+    <ion-item ng-repeat="item in menuCocktail" class="item" ng-hide="hideDrinks">
+      <div class="row">
+        <div class="col col-80 name">
+          <h2>{{item.name}}</h2>
+        </div>
+        <div class="col col-20 price">
+          <h2>{{item.price}}€</h2>
+        </div>
+      </div>
+    </ion-item>
+  </div>
+<br>
+<div class="row linkButtonBar">
+    <!-- <div class="col col-33 mapAccess">
+      <h5>{{pub.distance}}m</h5>
+    <div class="mapButton">
+      <a ui-sref='mapDir({pubId:pub.id})'  class="button button-icon icon ion-map"></a>
+    </div>
+    </div> -->
+    <div class="col col-50 rating">
+      <h5>Note</h5>
+      <div class="ratingButton">
+      <a ng-click="showRating()" class="button icon-right ion-heart button-clear button-dark">{{ratingAvg}}</a>
+      </div>
+    </div>
+    <div class="col col-50 social">
+      <h5>Social</h5>
+      <div class="socialButton">
+      <a class="button button-icon icon ion-social-facebook" onclick="window.open('http://www.google.com/', '_blank', 'location=no'); return false;"></a>
+      </div>
+    </div>
+</div>
+</ion-content>
+</ion-view>

@@ -142,16 +142,17 @@ angular.module('starter.controllers', ['ionic'])
     $scope.data = {};
 
     // An elaborate, custom popup
-    var myPopup = $ionicPopup.show({
+    $scope.myPopup = $ionicPopup.show({
       templateUrl: "templates/popup.html",
       title: 'Bars',
       cssClass: 'barsPopup',
       scope: $scope
     });
 
-    ClosePopupService.register(myPopup);
+    ClosePopupService.register($scope.myPopup);
   };
 
+      // clean maps markup
       google.maps.Map.prototype.clearMarkers = function() {
       for(var i=0; i < this.markers.length; i++){
           this.markers[i].setMap(null);
