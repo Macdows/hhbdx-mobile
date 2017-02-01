@@ -140,7 +140,9 @@ angular.module('starter.controllers', ['ionic'])
   // Triggered on a button click, or some other target
   $scope.showPubs = function() {
     $scope.data = {};
-
+    var dateToCompareWith = new Date(Date.now());
+    var icon = "";
+    $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
     // An elaborate, custom popup
     var myPopup = $ionicPopup.show({
       templateUrl: "templates/popup.html",
@@ -155,7 +157,7 @@ angular.module('starter.controllers', ['ionic'])
       google.maps.Map.prototype.clearMarkers = function() {
       for(var i=0; i < this.markers.length; i++){
           this.markers[i].setMap(null);
-      refe
+      }
       this.markers = new Array();
     };
 
@@ -168,7 +170,6 @@ angular.module('starter.controllers', ['ionic'])
            zoom: 16,
            mapTypeId: google.maps.MapTypeId.TERRAIN
        };
-
        $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
        $scope.markers = [];
 
@@ -177,9 +178,7 @@ angular.module('starter.controllers', ['ionic'])
            map: $scope.map,
            icon: "../img/blue_dot.png"
        });
-
         drawPubs();
-
        //$ionicLoading.hide();
      }, function(error) {
        alert('Unable to get location: ' + error.message);
@@ -189,11 +188,11 @@ angular.module('starter.controllers', ['ionic'])
        //Wait until the map is loaded
        google.maps.event.addListenerOnce($scope.map, 'idle', function() {
          for (var i = 0; i < $scope.pubs.length; i++) {
-          //  var icon = isHappyHours($scope.pub[i].happyStart,$scope.pub[i].happyEnd);
+           var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
            var marker = new google.maps.Marker({
              map: $scope.map,
              position: $scope.pubs[i].position,
-            //  icon: icon
+             icon: icon
            });
            $scope.markers.push(marker);
            setMapOnAll($scope.map);
@@ -212,8 +211,8 @@ angular.module('starter.controllers', ['ionic'])
      function isHappyHours(openTime, closeTime) {
        var dateToCompareWith = new Date(Date.now());
        var icon = "";
-       dateToCompareWith = dataToCompareWith.getHours() + ":" + dataToCompareWith.getMinutes();
-       if(openTime < dateToCompareWith < closeTime) {
+       dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
+       if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
          return icon = "../img/happyHoursOpen.png";
        } else {
          return icon = "../img/happyHoursClose.png";
@@ -224,7 +223,6 @@ angular.module('starter.controllers', ['ionic'])
 
          clearMarkers();
          for (var i = 0; i < $scope.pubs.length; i++) {
-           console.log(i);
            var marker = new google.maps.Marker({
              map: $scope.map,
              position: $scope.pubs[i].position
@@ -240,7 +238,7 @@ angular.module('starter.controllers', ['ionic'])
              }
            })(marker, i));*/
          }
-     }
+     };
 
     // Sets the map on all markers in the array.
     function setMapOnAll(map) {
@@ -263,6 +261,5 @@ angular.module('starter.controllers', ['ionic'])
     function deleteMarkers() {
       clearMarkers();
       $scope.markers = [];
-}
-
+    }
 });

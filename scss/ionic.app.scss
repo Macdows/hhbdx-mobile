@@ -30,6 +30,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
  height: 100%;
 }
 
+.popup-body {
+  padding: 0px !important;
+}
+
 .listButton {
   position: absolute;
   bottom: 5%;

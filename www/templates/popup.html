@@ -3,7 +3,7 @@
     <a class="right button button-clear ion-ios-settings-strong button-dark"  ng-click="popover.show($event)"></a>
   </div>
 </div -->
-<div class="list ">
+<div class="list">
   <ion-item ui-sref="pub({pubId: pub.id})" ng-repeat="pub in pubs | filter:searchQuery | filter:search.type1 | filter:search.type2 | filter:search.type3 | distFilter:distMax" class="item item-thumbnail-left">
     <img src="{{pub.image}}" />
     <div class="row data">
@@ -12,7 +12,8 @@
         <h3>{{pub.happyStart}}/{{pub.happyEnd}}H</h3>
       </div>
       <div class="col col-20 rightData">
-        <img src="../img/H_icon.jpg" />
+        <img src="../img/happyIconOpen.jpg" ng-if="pub.happyStart <= dateToCompareWith && dateToCompareWith <= pub.happyEnd"/>
+        <img src="../img/happyIconclose.jpg" ng-if="(pub.happyStart >= dateToCompareWith && dateToCompareWith >= pub.happyEnd) || (pub.happyStart <= dateToCompareWith && dateToCompareWith >= pub.happyEnd) || (pub.happyStart >= dateToCompareWith && dateToCompareWith <= pub.happyEnd)"/>
         <h3>{{pub.price}}€</h3>
       </div>
     </div>
