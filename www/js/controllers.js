@@ -84,8 +84,8 @@ angular.module('starter.controllers', ['ionic'])
     name: "Mushroom",
     distance: 450,
     location: "Gambetta",
-    happyStart: 17,
-    happyEnd: 20,
+    happyStart: "17:00",
+    happyEnd: "20:00",
     price: 3.50,
     image: "img/mushroom.jpg",
     mainDrinkType: "Beer",
@@ -100,8 +100,8 @@ angular.module('starter.controllers', ['ionic'])
     name: "Camelot",
     distance: 1535,
     location: "La Victoire",
-    happyStart: 17.30,
-    happyEnd: 19,
+    happyStart: "17:30",
+    happyEnd: "19:00",
     price: 3.50,
     image: "img/camelot.jpg",
     mainDrink: "Cocktail",
@@ -116,8 +116,8 @@ angular.module('starter.controllers', ['ionic'])
     name: "Titi Twister",
     distance: 1475,
     location: "La Victoire",
-    happyStart: 18,
-    happyEnd: 21,
+    happyStart: "11:00",
+    happyEnd: "21:00",
     price: 3.50,
     image: "img/titi.jpg",
     mainDrink: "Beer",
@@ -155,7 +155,7 @@ angular.module('starter.controllers', ['ionic'])
       google.maps.Map.prototype.clearMarkers = function() {
       for(var i=0; i < this.markers.length; i++){
           this.markers[i].setMap(null);
-      }
+      refe
       this.markers = new Array();
     };
 
@@ -189,10 +189,11 @@ angular.module('starter.controllers', ['ionic'])
        //Wait until the map is loaded
        google.maps.event.addListenerOnce($scope.map, 'idle', function() {
          for (var i = 0; i < $scope.pubs.length; i++) {
-           console.log(i);
+          //  var icon = isHappyHours($scope.pub[i].happyStart,$scope.pub[i].happyEnd);
            var marker = new google.maps.Marker({
              map: $scope.map,
-             position: $scope.pubs[i].position
+             position: $scope.pubs[i].position,
+            //  icon: icon
            });
            $scope.markers.push(marker);
            setMapOnAll($scope.map);
@@ -206,6 +207,17 @@ angular.module('starter.controllers', ['ionic'])
            })(marker, i));*/
          }
        });
+     }
+
+     function isHappyHours(openTime, closeTime) {
+       var dateToCompareWith = new Date(Date.now());
+       var icon = "";
+       dateToCompareWith = dataToCompareWith.getHours() + ":" + dataToCompareWith.getMinutes();
+       if(openTime < dateToCompareWith < closeTime) {
+         return icon = "../img/happyHoursOpen.png";
+       } else {
+         return icon = "../img/happyHoursClose.png";
+       }
      }
 
      $scope.refreshPubs = function() {
