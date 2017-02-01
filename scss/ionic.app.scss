@@ -34,6 +34,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   padding: 0px !important;
 }
 
+.popup {
+  height: auto !important;
+}
+
 .listButton {
   position: absolute;
   bottom: 5%;
@@ -41,6 +45,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: black;
 }
 
+.filterButton {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: black;
+  font-size: 25px;
+}
 
 .image img {
   width : 50px !important;

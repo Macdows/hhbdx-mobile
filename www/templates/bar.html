@@ -12,7 +12,7 @@
 </div>
 </div>
   <div class="list list-inset">
-    <div class="item item-divider" ng-click="hideOnClick()">
+    <div class="item item-divider" ng-click="hideOnClick('tab1')">
       <div class="row">
         <div class="col col-60">
           <h2>Bières</h2>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-  <ion-item ng-repeat="item in menuBeer" class="item" ng-hide="hideDrinks">
+  <ion-item ng-repeat="item in menuBeer" class="item" ng-hide="tab1">
     <div class="row">
       <div class="col col-60">
         <h2>{{item.name}}</h2>
@@ -39,17 +39,17 @@
     </div>
   </ion-item>
 
-    <div class="item item-divider"  ng-click='hideOnClick()'>
+    <div class="item item-divider"  ng-click="hideOnClick('tab2')">
       <div class="row">
-        <div class="col col-75">
+        <div class="col col-80">
           <h2>Cocktails</h2>
         </div>
-        <div class="col col-25 price">
+        <div class="col col-20 price">
           <h2>Prix</h2>
         </div>
       </div>
     </div>
-    <ion-item ng-repeat="item in menuCocktail" class="item" ng-hide="hideDrinks">
+    <ion-item ng-repeat="item in menuCocktail" class="item" ng-hide="tab2">
       <div class="row">
         <div class="col col-80 name">
           <h2>{{item.name}}</h2>

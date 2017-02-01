@@ -55,15 +55,15 @@ angular.module('starter.controllers', ['ionic'])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $state, $http, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
 
-  /*$ionicLoading.show({
+  $ionicLoading.show({
     content: 'Loading',
     animation: 'fade-in',
     showBackdrop: true,
     maxWidth: 200,
     showDelay: 0
-  });*/
+  });
 
   var options = {
      timeout: 10000,
@@ -79,56 +79,114 @@ angular.module('starter.controllers', ['ionic'])
     cocktail: false
   };
 
-  $scope.pubs = [{
-    id: 1,
-    name: "Mushroom",
-    distance: 450,
-    location: "Gambetta",
-    happyStart: "17:00",
-    happyEnd: "20:00",
-    price: 3.50,
-    image: "img/mushroom.jpg",
-    mainDrinkType: "Beer",
-    secondDrinkType: "Cocktail",
-    position: {
-      lat: 44.84057,
-      lng: -0.58149
-    },
-    rating: [4.2]
-  }, {
-    id: 2,
-    name: "Camelot",
-    distance: 1535,
-    location: "La Victoire",
-    happyStart: "17:30",
-    happyEnd: "19:00",
-    price: 3.50,
-    image: "img/camelot.jpg",
-    mainDrink: "Cocktail",
-    secondDrinkType: "Beer",
-    position: {
-      lat: 44.83237,
-      lng: -0.57107
-    },
-    rating: [3.8]
-  }, {
-    id: 3,
-    name: "Titi Twister",
-    distance: 1475,
-    location: "La Victoire",
-    happyStart: "11:00",
-    happyEnd: "21:00",
-    price: 3.50,
-    image: "img/titi.jpg",
-    mainDrink: "Beer",
-    secondDrinkType: "Wine",
-    position: {
-      lat: 44.83175,
-      lng: -0.56963
-    },
-    rating: [4.6, 3.9]
-  }];
+  $http.get('/database/database.json').success(function(response) {
+    $scope.pubs = response;
+    // Triggered on a button click, or some other target
+    $scope.showPubs = function() {
+      $scope.data = {};
+      var dateToCompareWith = new Date(Date.now());
+      var icon = "";
+      $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
+      // An elaborate, custom popup
+      $scope.myPopup = $ionicPopup.show({
+        templateUrl: "templates/popup.html",
+        title: 'Bars',
+        cssClass: 'barsPopup',
+        scope: $scope
+      });
 
+      ClosePopupService.register($scope.myPopup);
+    };
+
+        // clean maps markup
+        google.maps.Map.prototype.clearMarkers = function() {
+        for(var i=0; i < this.markers.length; i++){
+            this.markers[i].setMap(null);
+        }
+        this.markers = new Array();
+      };
+
+
+     $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+         var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+         var mapOptions = {
+             disableDefaultUI: true,
+             center: myLatlng,
+             zoom: 16,
+             mapTypeId: google.maps.MapTypeId.TERRAIN
+         };
+         $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+         $scope.markers = [];
+
+         var myPosition = new google.maps.Marker({
+             position: myLatlng,
+             map: $scope.map,
+             icon: "../img/blue_dot.png"
+         });
+          $scope.refreshPubs();
+          $ionicLoading.hide();
+       }, function(error) {
+         alert('Unable to get location: ' + error.message);
+       });
+
+       function isHappyHours(openTime, closeTime) {
+         var dateToCompareWith = new Date(Date.now());
+         var icon = "";
+         dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
+         if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
+           return icon = "../img/happyHoursOpen.png";
+         } else {
+           return icon = "../img/happyHoursClose.png";
+         }
+       }
+
+       $scope.refreshPubs = function() {
+           clearMarkers();
+           google.maps.event.addListenerOnce($scope.map, 'idle', function() {
+             for (var i = 0; i < $scope.pubs.length; i++) {
+               var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
+               var marker = new google.maps.Marker({
+                 map: $scope.map,
+                 position: $scope.pubs[i].position,
+                 icon: icon
+               });
+               $scope.markers.push(marker);
+               setMapOnAll($scope.map);
+               //On Click go to pub page TODO=>Pub Pages
+               google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                 return function() {
+                   $state.go('app.bar', ({
+                     "barId": $scope.pubs[i].id
+                   }));
+                 }
+               })(marker, i));
+             }
+           });
+       };
+
+      // Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+        for (var i = 0; i < $scope.markers.length; i++) {
+          $scope.markers[i].setMap(map);
+        }
+      }
+
+      // Removes the markers from the map, but keeps them in the array.
+      function clearMarkers() {
+        setMapOnAll(null);
+      }
+
+      // Shows any markers currently in the array.
+      function showMarkers() {
+        setMapOnAll(map);
+      }
+
+      // Deletes all markers in the array by removing references to them.
+      function deleteMarkers() {
+        clearMarkers();
+        $scope.markers = [];
+      }
+      });
   /* $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
@@ -136,131 +194,4 @@ angular.module('starter.controllers', ['ionic'])
       console.log("coucou");
       $scope.popover = popover;
     }); */
-
-  // Triggered on a button click, or some other target
-  $scope.showPubs = function() {
-    $scope.data = {};
-    var dateToCompareWith = new Date(Date.now());
-    var icon = "";
-    $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
-    // An elaborate, custom popup
-    $scope.myPopup = $ionicPopup.show({
-      templateUrl: "templates/popup.html",
-      title: 'Bars',
-      cssClass: 'barsPopup',
-      scope: $scope
-    });
-
-    ClosePopupService.register($scope.myPopup);
-  };
-
-      // clean maps markup
-      google.maps.Map.prototype.clearMarkers = function() {
-      for(var i=0; i < this.markers.length; i++){
-          this.markers[i].setMap(null);
-      }
-      this.markers = new Array();
-    };
-
-
-   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-       var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-       var mapOptions = {
-           disableDefaultUI: true,
-           center: myLatlng,
-           zoom: 16,
-           mapTypeId: google.maps.MapTypeId.TERRAIN
-       };
-       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-       $scope.markers = [];
-
-       var myPosition = new google.maps.Marker({
-           position: myLatlng,
-           map: $scope.map,
-           icon: "../img/blue_dot.png"
-       });
-        drawPubs();
-       //$ionicLoading.hide();
-     }, function(error) {
-       alert('Unable to get location: ' + error.message);
-     });
-
-     function drawPubs(){
-       //Wait until the map is loaded
-       google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-         for (var i = 0; i < $scope.pubs.length; i++) {
-           var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
-           var marker = new google.maps.Marker({
-             map: $scope.map,
-             position: $scope.pubs[i].position,
-             icon: icon
-           });
-           $scope.markers.push(marker);
-           setMapOnAll($scope.map);
-           //On Click go to pub page TODO=>Pub Pages
-           /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
-             return function() {
-               $state.go('pub', ({
-                 "pubId": $scope.pubs[i].id
-               }));
-             }
-           })(marker, i));*/
-         }
-       });
-     }
-
-     function isHappyHours(openTime, closeTime) {
-       var dateToCompareWith = new Date(Date.now());
-       var icon = "";
-       dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
-       if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
-         return icon = "../img/happyHoursOpen.png";
-       } else {
-         return icon = "../img/happyHoursClose.png";
-       }
-     }
-
-     $scope.refreshPubs = function() {
-
-         clearMarkers();
-         for (var i = 0; i < $scope.pubs.length; i++) {
-           var marker = new google.maps.Marker({
-             map: $scope.map,
-             position: $scope.pubs[i].position
-           });
-           $scope.markers.push(marker);
-           setMapOnAll($scope.map);
-           //On Click go to pub page TODO=>Pub Pages
-           /*google.maps.event.addListener(marker, 'click', (function(marker, i) {
-             return function() {
-               $state.go('pub', ({
-                 "pubId": $scope.pubs[i].id
-               }));
-             }
-           })(marker, i));*/
-         }
-     };
-
-    // Sets the map on all markers in the array.
-    function setMapOnAll(map) {
-      for (var i = 0; i < $scope.markers.length; i++) {
-        $scope.markers[i].setMap(map);
-      }
-    }
-
-    // Removes the markers from the map, but keeps them in the array.
-    function clearMarkers() {
-      setMapOnAll(null);
-    }
-
-    // Shows any markers currently in the array.
-    function showMarkers() {
-      setMapOnAll(map);
-    }
-
-    // Deletes all markers in the array by removing references to them.
-    function deleteMarkers() {
-      clearMarkers();
-      $scope.markers = [];
-    }
 });

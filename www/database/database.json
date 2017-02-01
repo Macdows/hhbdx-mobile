@@ -1,0 +1,49 @@
+[{
+  "id": 1,
+  "name": "Mushroom",
+  "distance": 450,
+  "location": "Gambetta",
+  "happyStart": "14:30",
+  "happyEnd": "20:00",
+  "price": 3.50,
+  "image": "img/mushroom.jpg",
+  "mainDrinkType": "Beer",
+  "secondDrinkType": "Cocktail",
+  "position": {
+    "lat": 44.84057,
+    "lng": -0.58149
+  },
+  "rating": [4.2]
+}, {
+  "id": 2,
+  "name": "Camelot",
+  "distance": 1535,
+  "location": "La Victoire",
+  "happyStart": "14:57",
+  "happyEnd": "15:10",
+  "price": 3.50,
+  "image": "img/camelot.jpg",
+  "mainDrink": "Cocktail",
+  "secondDrinkType": "Beer",
+  "position": {
+    "lat": 44.83237,
+    "lng": -0.57107
+  },
+  "rating": [3.8]
+}, {
+  "id": 3,
+  "name": "Titi Twister",
+  "distance": 1475,
+  "location": "La Victoire",
+  "happyStart": "11:00",
+  "happyEnd": "21:00",
+  "price": 3.50,
+  "image": "img/titi.jpg",
+  "mainDrink": "Beer",
+  "secondDrinkType": "Wine",
+  "position": {
+    "lat": 44.83175,
+    "lng": -0.56963
+  },
+  "rating": [4.6, 3.9]
+}]

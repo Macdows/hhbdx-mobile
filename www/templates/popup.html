@@ -4,7 +4,7 @@
   </div>
 </div -->
 <div class="list ">
-  <ion-item ui-sref="app.bar({barId: pub.id})" ng-click="myPopup.close()" ng-repeat="pub in pubs | filter:searchQuery | filter:search.type1 | filter:search.type2 | filter:search.type3 | distFilter:distMax" class="item item-thumbnail-left">
+  <ion-item ui-sref="app.bar({barId: pub.id})" ng-click="myPopup.close()" ng-repeat="pub in pubs" class="item item-thumbnail-left">
     <img src="{{pub.image}}" />
     <div class="row data">
       <div class="col col-80 leftData">
@@ -13,7 +13,7 @@
       </div>
       <div class="col col-20 rightData">
         <img src="../img/happyIconOpen.jpg" ng-if="pub.happyStart <= dateToCompareWith && dateToCompareWith <= pub.happyEnd"/>
-        <img src="../img/happyIconclose.jpg" ng-if="(pub.happyStart >= dateToCompareWith && dateToCompareWith >= pub.happyEnd) || (pub.happyStart <= dateToCompareWith && dateToCompareWith >= pub.happyEnd) || (pub.happyStart >= dateToCompareWith && dateToCompareWith <= pub.happyEnd)"/>
+        <img src="../img/happyIconclose.jpg" ng-if="(pub.happyStart > dateToCompareWith && dateToCompareWith > pub.happyEnd) || (pub.happyStart < dateToCompareWith && dateToCompareWith > pub.happyEnd) || (pub.happyStart > dateToCompareWith && dateToCompareWith < pub.happyEnd)"/>
         <h3>{{pub.price}}€</h3>
       </div>
     </div>
