@@ -53,6 +53,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   font-size: 25px;
 }
 
+.menuButton {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: black;
+  font-size: 25px;
+}
+
 .image img {
   width : 50px !important;
   height: 50px !important;

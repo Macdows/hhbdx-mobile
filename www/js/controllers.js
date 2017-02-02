@@ -65,6 +65,12 @@ angular.module('starter.controllers', ['ionic'])
     showDelay: 0
   });
 
+  //MenuToggle
+  $scope.toggleLeft = function() {
+    console.log("1");
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+
   var options = {
      timeout: 10000,
      enableHighAccuracy: true
