@@ -9822,11 +9822,31 @@ a.button {
 .scroll {
   height: 100%; }
 
+.popup-body {
+  padding: 0px !important; }
+
+.popup {
+  height: auto !important; }
+
 .listButton {
   position: absolute;
   bottom: 5%;
   right: 5%;
   color: black; }
+
+.filterButton {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  color: black;
+  font-size: 25px; }
+
+.menuButton {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: black;
+  font-size: 25px; }
 
 .image img {
   width: 50px !important;
@@ -9925,6 +9945,12 @@ a.button {
 .popup-showing .active {
   z-index: 10; }
 
-.popover-backdrop {
-  opacity: 1;
-  z-index: 20; }
+.side-bar-element {
+  width: 100%;
+  text-align: center; }
+
+.side-bar-element h2 {
+  margin: 5px; }
+
+.side-bar-element img {
+  margin: -5px; }

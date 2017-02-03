@@ -1,0 +1,21 @@
+<!-- div class="popup_header">
+  <div class="settings">
+    <a class="right button button-clear ion-ios-settings-strong button-dark"  ng-click="popover.show($event)"></a>
+  </div>
+</div -->
+<div class="list ">
+  <ion-item ui-sref="app.bar({barId: pub.id})" ng-click="myPopup.close()" ng-repeat="pub in pubs" class="item item-thumbnail-left">
+    <img src="{{pub.image}}" />
+    <div class="row data">
+      <div class="col col-80 leftData">
+        <h2>{{pub.name}}</h2>
+        <h3>{{pub.happyStart}}/{{pub.happyEnd}}H</h3>
+      </div>
+      <div class="col col-20 rightData">
+        <img src="../img/happyIconOpen.jpg" ng-if="pub.happyStart <= dateToCompareWith && dateToCompareWith <= pub.happyEnd"/>
+        <img src="../img/happyIconclose.jpg" ng-if="(pub.happyStart > dateToCompareWith && dateToCompareWith > pub.happyEnd) || (pub.happyStart < dateToCompareWith && dateToCompareWith > pub.happyEnd) || (pub.happyStart > dateToCompareWith && dateToCompareWith < pub.happyEnd)"/>
+        <h3>{{pub.price}}€</h3>
+      </div>
+    </div>
+  </ion-item>
+</div>
