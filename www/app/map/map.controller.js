@@ -1,59 +1,4 @@
-angular.module('starter.controllers', ['ionic'])
-
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
+angular.module('hhbdxMapCtrl', ['ionic'])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $state, $http, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
 
@@ -79,7 +24,7 @@ angular.module('starter.controllers', ['ionic'])
     cocktail: false
   };
 
-  $http.get('/database/database.json').success(function(response) {
+  $http.get('../../database/database.json').success(function(response) {
     $scope.pubs = response;
     // Triggered on a button click, or some other target
     $scope.showPubs = function() {
@@ -89,7 +34,7 @@ angular.module('starter.controllers', ['ionic'])
       $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
       // An elaborate, custom popup
       $scope.myPopup = $ionicPopup.show({
-        templateUrl: "templates/popup.html",
+        templateUrl: "../app/popup/popup.html",
         title: 'Bars',
         cssClass: 'barsPopup',
         scope: $scope
@@ -121,7 +66,7 @@ angular.module('starter.controllers', ['ionic'])
          var myPosition = new google.maps.Marker({
              position: myLatlng,
              map: $scope.map,
-             icon: "../img/blue_dot.png"
+             icon: "../../img/blue_dot.png"
          });
           $scope.refreshPubs();
           $ionicLoading.hide();
@@ -134,9 +79,9 @@ angular.module('starter.controllers', ['ionic'])
          var icon = "";
          dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
          if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
-           return icon = "../img/happyHoursOpen.png";
+           return icon = "../../img/happyHoursOpen.png";
          } else {
-           return icon = "../img/happyHoursClose.png";
+           return icon = "../../img/happyHoursClose.png";
          }
        }
 

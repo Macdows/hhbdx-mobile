@@ -1,5 +1,4 @@
-angular.module('BarDetail', ['ionic'])
-
+angular.module('hhbdxBarCtrl', ['ionic'])
 
 .controller('BarDetailCtrl', function($scope, $stateParams, $http, $ionicPopup) {
 
@@ -44,7 +43,7 @@ angular.module('BarDetail', ['ionic'])
 
 
 
-$http.get('/database/database.json').success(function(response) {
+$http.get('../../database/database.json').success(function(response) {
   $scope.pubs = response;
   $scope.pub = $scope.pubs[thisId - 1];
   rateAvg();
