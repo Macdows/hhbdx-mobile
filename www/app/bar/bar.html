@@ -60,7 +60,7 @@
       </div>
     </ion-item>
   </div>
-<br>
+
 <div class="row linkButtonBar">
     <!-- <div class="col col-33 mapAccess">
       <h5>{{pub.distance}}m</h5>
@@ -68,16 +68,23 @@
       <a ui-sref='mapDir({pubId:pub.id})'  class="button button-icon icon ion-map"></a>
     </div>
     </div> -->
-    <div class="col col-50 rating">
-      <h5>Note</h5>
-      <div class="ratingButton">
-      <a ng-click="showRating()" class="button icon-right ion-heart button-clear button-dark">{{ratingAvg}}</a>
-      </div>
-    </div>
-    <div class="col col-50 social">
+
+    <div class="col col-33 social">
       <h5>Social</h5>
       <div class="socialButton">
-      <a class="button button-icon icon ion-social-facebook" onclick="window.open('http://www.google.com/', '_blank', 'location=no'); return false;"></a>
+      <a class="button ion-social-facebook button-clear button-dark" onclick="window.open('http://www.google.com/', '_blank', 'location=no'); return false;"></a>
+      </div>
+    </div>
+    <div class="col col-33 rating">
+      <h5>Note</h5>
+      <div class="ratingButton">
+      <a ng-click="showRating()" class="button icon-right ion-star button-clear button-dark">{{ratingAvg}}</a>
+      </div>
+    </div>
+    <div class="col col-33 favourite">
+      <h5>Favoris</h5>
+      <div class="favouriteButton">
+      <a class="button ion-heart button-clear button-dark"></a>
       </div>
     </div>
 </div>
