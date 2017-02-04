@@ -4,7 +4,6 @@ angular.module('hhbdxBarCtrl', ['ionic'])
 
   var thisId = $stateParams.barId;
 
-
   $scope.hideOnClick = function(item)
   {
     $scope[item] = !$scope[item];
