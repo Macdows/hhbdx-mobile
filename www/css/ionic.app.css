@@ -9848,6 +9848,13 @@ a.button {
   color: black;
   font-size: 25px; }
 
+.findButton {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  color: black;
+  font-size: 25px; }
+
 .image img {
   width: 50px !important;
   height: 50px !important; }
