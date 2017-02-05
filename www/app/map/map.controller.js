@@ -132,6 +132,26 @@ angular.module('hhbdxMapCtrl', ['ionic'])
         $scope.markers = [];
       }
       });
+
+
+      $scope.findMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $ionicLoading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+      };
+
   /* $ionicPopover.fromTemplateUrl('templates/popover.html', {
       scope: $scope,
     }).then(function(popover) {
