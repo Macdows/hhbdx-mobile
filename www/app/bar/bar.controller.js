@@ -42,20 +42,10 @@ angular.module('hhbdxBarCtrl', ['ionic'])
 
 
 
-$http.get('../../database/database.json').success(function(response) {
-  $scope.pubs = response;
-  $scope.pub = $scope.pubs[thisId - 1];
-  rateAvg();
-  function rateAvg() {
-    $scope.ratingAvg = 0;
-    for (var i = 0; i < $scope.pub.rating.length; i++) {
-      $scope.ratingAvg += $scope.pub.rating[i];
-    }
-
-    $scope.ratingAvg /= $scope.pub.rating.length;
-    $scope.ratingAvg = $scope.ratingAvg.toFixed(1);
-  }
-
+  $http.get('../../database/database.json').success(function(response) {
+    $scope.pubs = response;
+    $scope.pub = $scope.pubs[thisId - 1];
+    rateAvg();
 
     $scope.showRating = function() {
       $scope.data = {}
@@ -78,14 +68,27 @@ $http.get('../../database/database.json').success(function(response) {
           }
         }, ]
       });
-      $scope.myPopup.then(function(res) {
-        if(res != null)
-        {
-          $scope.pub.rating.push(parseInt(res));
-          rateAvg();
-        }
-      });
+
+        $scope.myPopup.then(function(res) {
+          if(res != null)
+          {
+            $scope.pub.rating.push(parseInt(res));
+            rateAvg();
+          }
+        });
 
     };
   });
+
+
+  function rateAvg() {
+    $scope.ratingAvg = 0;
+    for (var i = 0; i < $scope.pub.rating.length; i++) {
+      $scope.ratingAvg += $scope.pub.rating[i];
+    }
+
+    $scope.ratingAvg /= $scope.pub.rating.length;
+    $scope.ratingAvg = $scope.ratingAvg.toFixed(1);
+  }
+
 });

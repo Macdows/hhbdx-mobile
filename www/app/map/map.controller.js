@@ -26,13 +26,14 @@ angular.module('hhbdxMapCtrl', ['ionic'])
 
   $http.get('../../database/database.json').success(function(response) {
     $scope.pubs = response;
-    // Triggered on a button click, or some other target
+
+    // Triggered on button click
     $scope.showPubs = function() {
       $scope.data = {};
       var dateToCompareWith = new Date(Date.now());
       var icon = "";
       $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
-      // An elaborate, custom popup
+
       $scope.myPopup = $ionicPopup.show({
         templateUrl: "../app/popup/popup.html",
         title: 'Bars',
@@ -40,17 +41,9 @@ angular.module('hhbdxMapCtrl', ['ionic'])
         scope: $scope
       });
 
+      // Add the popup to the closing service
       ClosePopupService.register($scope.myPopup);
     };
-
-        // clean maps markup
-        google.maps.Map.prototype.clearMarkers = function() {
-        for(var i=0; i < this.markers.length; i++){
-            this.markers[i].setMap(null);
-        }
-        this.markers = new Array();
-      };
-
 
      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
          var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -68,7 +61,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
              map: $scope.map,
              icon: "../../img/blue_dot.png"
          });
-          $scope.refreshPubs();
+          $scope.drawPubs();
           $ionicLoading.hide();
        }, function(error) {
          alert('Unable to get location: ' + error.message);
@@ -85,7 +78,8 @@ angular.module('hhbdxMapCtrl', ['ionic'])
          }
        }
 
-       $scope.refreshPubs = function() {
+       // Draw the pub markers on the map
+       $scope.drawPubs = function() {
            clearMarkers();
            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
              for (var i = 0; i < $scope.pubs.length; i++) {
@@ -133,7 +127,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
       }
       });
 
-
+      // Center map on user location
       $scope.findMe = function() {
         if(!$scope.map) {
           return;
@@ -152,11 +146,11 @@ angular.module('hhbdxMapCtrl', ['ionic'])
         });
       };
 
-  /* $ionicPopover.fromTemplateUrl('templates/popover.html', {
-      scope: $scope,
-    }).then(function(popover) {
-
-      console.log("coucou");
-      $scope.popover = popover;
-    }); */
+      // Clean maps markup
+      google.maps.Map.prototype.clearMarkers = function() {
+        for(var i=0; i < this.markers.length; i++){
+            this.markers[i].setMap(null);
+        }
+        this.markers = new Array();
+      };
 });
