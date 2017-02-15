@@ -53,6 +53,22 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   font-size: 25px;
 }
 
+.menuButton {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: black;
+  font-size: 25px;
+}
+
+.findButton {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  color: black;
+  font-size: 25px;
+}
+
 .image img {
   width : 50px !important;
   height: 50px !important;
@@ -177,7 +193,28 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .popup-showing .active {
   z-index: 10;
 }
-.popover-backdrop{
-    opacity: 1;
-    z-index: 20;
+
+.side-bar-element{
+  width: 100%;
+  text-align: center;
+}
+
+.side-bar-element h2{
+  margin: 5px;
+}
+
+.side-bar-element img{
+  margin: -5px;
+}
+
+.favouriteButton a {
+  font-size: 50px;
+}
+
+.socialButton a {
+  font-size: 50px;
+}
+
+.ratingButton a {
+  font-size: 40px;
 }

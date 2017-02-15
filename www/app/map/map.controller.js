@@ -1,59 +1,4 @@
-angular.module('starter.controllers', ['ionic'])
-
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
+angular.module('hhbdxMapCtrl', ['ionic'])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $state, $http, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
 
@@ -79,33 +24,26 @@ angular.module('starter.controllers', ['ionic'])
     cocktail: false
   };
 
-  $http.get('/database/database.json').success(function(response) {
+  $http.get('../../database/database.json').success(function(response) {
     $scope.pubs = response;
-    // Triggered on a button click, or some other target
+
+    // Triggered on button click
     $scope.showPubs = function() {
       $scope.data = {};
       var dateToCompareWith = new Date(Date.now());
       var icon = "";
       $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
-      // An elaborate, custom popup
+
       $scope.myPopup = $ionicPopup.show({
-        templateUrl: "templates/popup.html",
+        templateUrl: "../app/popup/popup.html",
         title: 'Bars',
         cssClass: 'barsPopup',
         scope: $scope
       });
 
+      // Add the popup to the closing service
       ClosePopupService.register($scope.myPopup);
     };
-
-        // clean maps markup
-        google.maps.Map.prototype.clearMarkers = function() {
-        for(var i=0; i < this.markers.length; i++){
-            this.markers[i].setMap(null);
-        }
-        this.markers = new Array();
-      };
-
 
      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
          var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -121,9 +59,9 @@ angular.module('starter.controllers', ['ionic'])
          var myPosition = new google.maps.Marker({
              position: myLatlng,
              map: $scope.map,
-             icon: "../img/blue_dot.png"
+             icon: "../../img/blue_dot.png"
          });
-          $scope.refreshPubs();
+          $scope.drawPubs();
           $ionicLoading.hide();
        }, function(error) {
          alert('Unable to get location: ' + error.message);
@@ -134,13 +72,14 @@ angular.module('starter.controllers', ['ionic'])
          var icon = "";
          dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
          if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
-           return icon = "../img/happyHoursOpen.png";
+           return icon = "../../img/happyHoursOpen.png";
          } else {
-           return icon = "../img/happyHoursClose.png";
+           return icon = "../../img/happyHoursClose.png";
          }
        }
 
-       $scope.refreshPubs = function() {
+       // Draw the pub markers on the map
+       $scope.drawPubs = function() {
            clearMarkers();
            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
              for (var i = 0; i < $scope.pubs.length; i++) {
@@ -187,11 +126,31 @@ angular.module('starter.controllers', ['ionic'])
         $scope.markers = [];
       }
       });
-  /* $ionicPopover.fromTemplateUrl('templates/popover.html', {
-      scope: $scope,
-    }).then(function(popover) {
 
-      console.log("coucou");
-      $scope.popover = popover;
-    }); */
+      // Center map on user location
+      $scope.findMe = function() {
+        if(!$scope.map) {
+          return;
+        }
+
+        $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          $ionicLoading.hide();
+        }, function(error) {
+          alert('Unable to get location: ' + error.message);
+        });
+      };
+
+      // Clean maps markup
+      google.maps.Map.prototype.clearMarkers = function() {
+        for(var i=0; i < this.markers.length; i++){
+            this.markers[i].setMap(null);
+        }
+        this.markers = new Array();
+      };
 });

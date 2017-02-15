@@ -1,0 +1,37 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-content>
+      <div class="side-bar-element login" menu-close ng-click="login()">
+        <a>
+          <img src="../img/login.png" alt="login">
+        </a>
+        <h2>Connexion</h2>
+      </div>
+      <div class="side-bar-element ">
+        <a>
+          <img src="../img/settings.png" alt="login">
+        </a>
+        <h2>Réglages</h2>
+      </div>
+      <div class="side-bar-element favourite">
+        <a>
+          <img src="../img/favourite.png" alt="login">
+        </a>
+        <h2>Favoris</h2>
+      </div>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
