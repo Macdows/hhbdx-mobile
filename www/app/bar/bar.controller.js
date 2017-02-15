@@ -42,7 +42,7 @@ angular.module('hhbdxBarCtrl', ['ionic'])
 
 
 
-  $http.get('../../database/database.json').success(function(response) {
+  $http.get('database/database.json').success(function(response) {
     $scope.pubs = response;
     $scope.pub = $scope.pubs[thisId - 1];
     rateAvg();

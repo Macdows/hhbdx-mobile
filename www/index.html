@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+                    script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+                                  style-src  'self' 'unsafe-inline' *">
     <title></title>
 
     <link rel="manifest" href="manifest.json">
@@ -24,11 +27,12 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="cordova.js"></script>
+
 
     <!-- google maps api -->
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es"></script>
 
     <!-- your app's js -->
     <script src="app/app.js"></script>
@@ -43,7 +47,7 @@
 
   </head>
 
-  <body ng-app="hhbdx">
+  <body ng-app="hhbdx" class="platform-android">
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

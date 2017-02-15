@@ -9,6 +9,17 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <!-- Allow images, xhrs, etc. to google.com -->
+    <access origin="http://google.com" />
+    <access origin="https://google.com" />
+    <!-- Access to the subdomain maps.google.com -->
+    <access origin="http://maps.google.com" />
+
+    <!-- A wildcard can be used to whitelist the entire network,
+    over HTTP and HTTPS.
+    *NOT RECOMMENDED* TEST -->
+    <allow-navigation href="*" />
+
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />

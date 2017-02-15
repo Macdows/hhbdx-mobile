@@ -24,7 +24,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
     cocktail: false
   };
 
-  $http.get('../../database/database.json').success(function(response) {
+  $http.get('database/database.json').success(function(response) {
     $scope.pubs = response;
 
     // Triggered on button click
@@ -35,7 +35,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
       $scope.dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
 
       $scope.myPopup = $ionicPopup.show({
-        templateUrl: "../app/popup/popup.html",
+        templateUrl: "app/popup/popup.html",
         title: 'Bars',
         cssClass: 'barsPopup',
         scope: $scope
@@ -59,7 +59,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
          var myPosition = new google.maps.Marker({
              position: myLatlng,
              map: $scope.map,
-             icon: "../../img/blue_dot.png"
+             icon: "img/blue_dot.png"
          });
           $scope.drawPubs();
           $ionicLoading.hide();
@@ -72,9 +72,9 @@ angular.module('hhbdxMapCtrl', ['ionic'])
          var icon = "";
          dateToCompareWith = dateToCompareWith.getHours() + ":" + (dateToCompareWith.getMinutes()<10?'0':'') + dateToCompareWith.getMinutes();
          if(openTime < dateToCompareWith && dateToCompareWith < closeTime) {
-           return icon = "../../img/happyHoursOpen.png";
+           return icon = "img/happyHoursOpen.png";
          } else {
-           return icon = "../../img/happyHoursClose.png";
+           return icon = "img/happyHoursClose.png";
          }
        }
 
