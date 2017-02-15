@@ -1,0 +1,21 @@
+<content has-header="true">
+  <div class="list">
+    <div class="item range">
+
+      <i class="icon ion-ios7-sunny-outline"></i>
+      <input type="range" name="volume" min="0" max="5000" value="{{slider.rangeValue}}" ng-model="slider.rangeValue">
+      <i class="icon ion-ios7-sunny"></i>
+
+    </div>
+    <div class="item item-divider">
+      Range Value : {{slider.rangeValue}}
+    </div>
+
+  </div>
+  <list class="card">
+
+    <item ng-repeat="number in lazyArray|filter:rangeFilter"
+          item="item">
+      {{number.value}}
+    </list>
+</content>

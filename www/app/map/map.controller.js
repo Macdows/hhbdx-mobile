@@ -45,6 +45,40 @@ angular.module('hhbdxMapCtrl', ['ionic'])
       ClosePopupService.register($scope.myPopup);
     };
 
+    // Triggered on button click
+    $scope.filterBar = function() {
+      $scope.data = {};
+      $scope.myPopup = $ionicPopup.show({
+        templateUrl: "../app/popup/filter.html",
+        title: 'Filter',
+        cssClass: 'filterPopup',
+        scope: $scope
+      });
+
+      //On close
+      $scope.myPopup.then(function(res) {
+        var filter = {
+          distance:$scope.slider.rangeValue
+        };
+        $scope.drawPubs(filter);
+      });
+
+      $scope.slider = {};
+      $scope.slider.rangeValue = 0;
+
+      $scope.$watch('slider.rangeValue',function(val,old){
+         $scope.slider.rangeValue = parseInt(val);
+      });
+
+      $scope.rangeFilter = function(number) {
+          return (number.value > $scope.slider.rangeValue);
+      }
+      // Add the popup to the closing service
+      ClosePopupService.register($scope.myPopup);
+    };
+
+
+
      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
          var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
          var mapOptions = {
@@ -61,7 +95,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
              map: $scope.map,
              icon: "../../img/blue_dot.png"
          });
-          $scope.drawPubs();
+          $scope.drawPubs("");
           $ionicLoading.hide();
        }, function(error) {
          alert('Unable to get location: ' + error.message);
@@ -79,26 +113,46 @@ angular.module('hhbdxMapCtrl', ['ionic'])
        }
 
        // Draw the pub markers on the map
-       $scope.drawPubs = function() {
+       $scope.drawPubs = function(filter) {
            clearMarkers();
+           $scope.markers = [];
            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
              for (var i = 0; i < $scope.pubs.length; i++) {
-               var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
-               var marker = new google.maps.Marker({
-                 map: $scope.map,
-                 position: $scope.pubs[i].position,
-                 icon: icon
-               });
-               $scope.markers.push(marker);
-               setMapOnAll($scope.map);
-               //On Click go to pub page TODO=>Pub Pages
-               google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                 return function() {
-                   $state.go('app.bar', ({
-                     "barId": $scope.pubs[i].id
-                   }));
-                 }
-               })(marker, i));
+               if(filter.distance !== undefined && $scope.pubs[i].distance < filter.distance) {
+                 var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
+                 var marker = new google.maps.Marker({
+                   map: $scope.map,
+                   position: $scope.pubs[i].position,
+                   icon: icon
+                 });
+                 $scope.markers.push(marker);
+                 setMapOnAll($scope.map);
+                 //On Click go to pub page TODO=>Pub Pages
+                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                   return function() {
+                     $state.go('app.bar', ({
+                       "barId": $scope.pubs[i].id
+                     }));
+                   }
+                 })(marker, i));
+               } else if(filter.distance === undefined) {
+                 var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
+                 var marker = new google.maps.Marker({
+                   map: $scope.map,
+                   position: $scope.pubs[i].position,
+                   icon: icon
+                 });
+                 $scope.markers.push(marker);
+                 setMapOnAll($scope.map);
+                 //On Click go to pub page TODO=>Pub Pages
+                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                   return function() {
+                     $state.go('app.bar', ({
+                       "barId": $scope.pubs[i].id
+                     }));
+                   }
+                 })(marker, i));
+               }
              }
            });
        };
