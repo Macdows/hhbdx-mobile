@@ -1,50 +1,15 @@
-angular.module('hhbdxBarCtrl', ['ionic'])
+angular.module('hhbdxFavouritesCtrl', ['ionic'])
 
-.controller('BarDetailCtrl', function($scope, $stateParams, $http, $ionicPopup) {
-
-  var thisId = $stateParams.barId;
-
-  $scope.hideOnClick = function(item)
-  {
-    $scope[item] = !$scope[item];
-  }
-
-  $scope.menuBeer = [{
-    name: "Blonde",
-    demie: 3,
-    pinte: 5
-  }, {
-    name: "Brune",
-    demie: 2.5,
-    pinte: 5
-  }, {
-    name: "Blanche",
-    demie: 2.5,
-    pinte: 4
-  }, {
-    name: "Rousse",
-    demie: 3,
-    pinte: 5
-  }]
-  $scope.menuCocktail = [{
-    name: "Long Island",
-    price: 4
-  }, {
-    name: "Mojito",
-    price: 5
-  }, {
-    name: "Caïpirina",
-    price: 4
-  }, {
-    name: "Sex On The Beach",
-    price: 4
-  }]
-
-
-
+.controller('FavouritesCtrl', function($scope, $stateParams, $http, $ionicPopup) {
   $http.get('../../database/database.json').success(function(response) {
-    $scope.pubs = response;
-    $scope.pub = $scope.pubs[thisId - 1];
+    $scope.myFavorites = [];
+    console.log('response', response);
+    angular.forEach(response, function(value, key) {
+      if (value.isFavourite) {
+        this.push(value);
+      }
+    }, $scope.myFavorites);
+    console.log($scope.myFavorites);
     rateAvg();
 
     $scope.showRating = function() {
@@ -90,10 +55,4 @@ angular.module('hhbdxBarCtrl', ['ionic'])
     $scope.ratingAvg /= $scope.pub.rating.length;
     $scope.ratingAvg = $scope.ratingAvg.toFixed(1);
   }
-
-  $scope.favourite = function() {
-    $scope.pub.isFavourite = !$scope.pub.isFavourite;
-    console.log($scope.pub);
-  }
-
 });

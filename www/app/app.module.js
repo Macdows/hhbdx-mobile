@@ -8,4 +8,5 @@ var app = angular
                 'hhbdxBarCtrl',
                 'hhbdxMenuCtrl',
                 'hhbdxPopupService',
+                'hhbdxFavouritesCtrl'
               ]);

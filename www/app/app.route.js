@@ -31,6 +31,16 @@ var app = angular.module('hhbdxRouter', ['ui.router'])
         controller: 'MapCtrl'
       }
     }
+  })
+
+  .state('app.favourites', {
+    url: '/favourites',
+    views: {
+      'menuContent': {
+        templateUrl: 'app/favourites/favourites.html',
+        controller: 'FavouritesCtrl'
+      }
+    }
   });
 
   // if none of the states are matched follow

@@ -13,7 +13,8 @@
     "lat": 44.84057,
     "lng": -0.58149
   },
-  "rating": [4.2]
+  "rating": [4.2],
+  "isFavourite": false
 }, {
   "id": 2,
   "name": "Camelot",
@@ -29,7 +30,8 @@
     "lat": 44.83237,
     "lng": -0.57107
   },
-  "rating": [3.8]
+  "rating": [3.8],
+  "isFavourite": false
 }, {
   "id": 3,
   "name": "Titi Twister",
@@ -45,5 +47,6 @@
     "lat": 44.83175,
     "lng": -0.56963
   },
-  "rating": [4.6, 3.9]
+  "rating": [4.6, 3.9],
+  "isFavourite": true
 }]
