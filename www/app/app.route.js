@@ -13,6 +13,12 @@ var app = angular.module('hhbdxRouter', ['ui.router'])
     controller: 'MenuCtrl'
   })
 
+  .state('login', {
+    url: '/login',
+    templateUrl: 'app/login/login.html',
+    controller: 'LoginCtrl'
+  })
+
   .state('app.bar', {
     url: '/bar/:barId',
     views: {
@@ -34,6 +40,6 @@ var app = angular.module('hhbdxRouter', ['ui.router'])
   });
 
   // if none of the states are matched follow
-  $urlRouterProvider.otherwise('app/map');
+  $urlRouterProvider.otherwise('login');
 
 });
