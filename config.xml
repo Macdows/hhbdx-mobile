@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.hhbdxmobile692381" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.hhbdxmobile692381" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>hhbdx-mobile</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -31,6 +31,17 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
+
+    <platform name="android">
+        <plugin name="cordova-plugin-file" version="*" />
+        <config-file target="AndroidManifest.xml" parent="/*">
+          <uses-permission android:name="android.permission.INTERNET" />
+          <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+          <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+          <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+        </config-file>
+    </platform>
+
     <platform name="ios">
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
@@ -63,6 +74,10 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
+
+    <plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
+
+    <plugin name="cordova-plugin-geolocation" version="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.3.1" />
     <plugin name="cordova-plugin-console" spec="~1.0.5" />
     <plugin name="cordova-plugin-device" spec="~1.1.4" />
