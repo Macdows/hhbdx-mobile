@@ -1,4 +1,4 @@
-angular.module('hhbdxMapCtrl', ['ionic'])
+  angular.module('hhbdxMapCtrl', ['ionic'])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $state, $http, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
 
@@ -15,17 +15,24 @@ angular.module('hhbdxMapCtrl', ['ionic'])
      enableHighAccuracy: true
    };
 
-  $scope.showFilter = false;
-  $scope.distMax = 2500;
+  $scope.data = {};
+  $scope.data.distance = 2500;
+  $scope.data.rating = 0;
+  $scope.data.type = {
+    beer: 'Beer',
+    wine: 'Wine',
+    cocktail: 'Cocktail'
+  };
 
-  $scope.filters = {
-    beer: false,
-    wine: false,
-    cocktail: false
+  var filter = {
+    distance: $scope.data.distance,
+    type: $scope.data.type,
+    rating: $scope.data.rating
   };
 
   $http.get('../../database/database.json').success(function(response) {
     $scope.pubs = response;
+
 
     // Triggered on button click
     $scope.showPubs = function() {
@@ -47,7 +54,6 @@ angular.module('hhbdxMapCtrl', ['ionic'])
 
     // Triggered on button click
     $scope.filterBar = function() {
-      $scope.data = {};
       $scope.myPopup = $ionicPopup.show({
         templateUrl: "../app/popup/filter.html",
         title: 'Filter',
@@ -57,27 +63,17 @@ angular.module('hhbdxMapCtrl', ['ionic'])
 
       //On close
       $scope.myPopup.then(function(res) {
-        var filter = {
-          distance:$scope.slider.rangeValue
+        console.log($scope.data.type);
+        filter = {
+          distance: $scope.data.distance,
+          type: $scope.data.type,
+          rating: $scope.data.rating
         };
         $scope.drawPubs(filter);
       });
-
-      $scope.slider = {};
-      $scope.slider.rangeValue = 0;
-
-      $scope.$watch('slider.rangeValue',function(val,old){
-         $scope.slider.rangeValue = parseInt(val);
-      });
-
-      $scope.rangeFilter = function(number) {
-          return (number.value > $scope.slider.rangeValue);
-      }
       // Add the popup to the closing service
       ClosePopupService.register($scope.myPopup);
     };
-
-
 
      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
          var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -95,7 +91,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
              map: $scope.map,
              icon: "../../img/blue_dot.png"
          });
-          $scope.drawPubs("");
+          $scope.drawPubs(filter);
           $ionicLoading.hide();
        }, function(error) {
          alert('Unable to get location: ' + error.message);
@@ -118,24 +114,7 @@ angular.module('hhbdxMapCtrl', ['ionic'])
            $scope.markers = [];
            google.maps.event.addListenerOnce($scope.map, 'idle', function() {
              for (var i = 0; i < $scope.pubs.length; i++) {
-               if(filter.distance !== undefined && $scope.pubs[i].distance < filter.distance) {
-                 var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
-                 var marker = new google.maps.Marker({
-                   map: $scope.map,
-                   position: $scope.pubs[i].position,
-                   icon: icon
-                 });
-                 $scope.markers.push(marker);
-                 setMapOnAll($scope.map);
-                 //On Click go to pub page TODO=>Pub Pages
-                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                   return function() {
-                     $state.go('app.bar', ({
-                       "barId": $scope.pubs[i].id
-                     }));
-                   }
-                 })(marker, i));
-               } else if(filter.distance === undefined) {
+               if(filter.rating <= $scope.pubs[i].rating && (filter.type.beer === $scope.pubs[i].mainDrinkType || filter.type.cocktail === $scope.pubs[i].mainDrinkType  || filter.type.wine === $scope.pubs[i].mainDrinkType) && $scope.pubs[i].distance < filter.distance) {
                  var icon = isHappyHours($scope.pubs[i].happyStart,$scope.pubs[i].happyEnd);
                  var marker = new google.maps.Marker({
                    map: $scope.map,

@@ -1,21 +1,65 @@
 <content has-header="true">
-  <div class="list">
-    <div class="item range">
-
-      <i class="icon ion-ios7-sunny-outline"></i>
-      <input type="range" name="volume" min="0" max="5000" value="{{slider.rangeValue}}" ng-model="slider.rangeValue">
-      <i class="icon ion-ios7-sunny"></i>
-
+    <div class="row">
+        <div class="col col-33">
+           <div ng-if="data.type.beer == 'Beer' ">
+        <td>
+           <input type="checkbox" id="beer" data-ng-model='data.type.beer' data-ng-true-value="'Beer'" data-ng-false-value="''" ng-checked="true"/>
+        </td>
+       </div>
+       <div ng-if="data.type.beer != 'Beer' ">
+           <td>
+             <input type="checkbox" id="beer" data-ng-model='data.type.beer' data-ng-true-value="'Beer'" data-ng-false-value="''" ng-checked="false"/>
+           </td>
+       </div>
+          <label for="beer"> Beer </label>
+        </div>
+        <div class="col col-33">
+           <div ng-if="data.type.cocktail == 'Cocktail' ">
+        <td>
+           <input type="checkbox" id="cocktail" data-ng-model='data.type.cocktail' data-ng-true-value="'Cocktail'" data-ng-false-value="''" ng-checked="true"/>
+        </td>
+       </div>
+       <div ng-if="data.type.cocktail != 'Cocktail' ">
+           <td>
+             <input type="checkbox" id="cocktail" data-ng-model='data.type.cocktail' data-ng-true-value="'Cocktail'" data-ng-false-value="''" ng-checked="false"/>
+           </td>
+       </div>
+          <label for="cocktail"> Cocktail </label>
+        </div>
+        <div class="col col-33">
+           <div ng-if="data.type.wine == 'Wine' ">
+        <td>
+           <input type="checkbox" id="wine" data-ng-model='data.type.wine' data-ng-true-value="'Wine'" data-ng-false-value="''" ng-checked="true"/>
+        </td>
+       </div>
+       <div ng-if="data.type.wine != 'Wine' ">
+           <td>
+             <input type="checkbox" id="wine" data-ng-model='data.type.wine' data-ng-true-value="'Wine'" data-ng-false-value="''" ng-checked="false"/>
+           </td>
+       </div>
+          <label for="wine"> Wine </label>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col col-25">
+        Distance :
+      </div>
+        <div class="col col-50">
+            <input id="test4" type="range" name="range" max="2500" min="0" step="1" ng-model="data.distance">
+        </div>
+        <div class="col col-25">
+         {{data.distance}}m
+       </div>
+   </div>
+       <div class="row">
+       <div class="col col-25">
+         Rating :
+       </div>
+         <div class="col col-50">
+             <input id="test5" type="range" name="range" max="5" min="0" step="1" ng-model="data.rating">
+         </div>
+         <div class="col col-25">
+          {{data.rating}}
+        </div>
     </div>
-    <div class="item item-divider">
-      Range Value : {{slider.rangeValue}}
-    </div>
-
-  </div>
-  <list class="card">
-
-    <item ng-repeat="number in lazyArray|filter:rangeFilter"
-          item="item">
-      {{number.value}}
-    </list>
 </content>

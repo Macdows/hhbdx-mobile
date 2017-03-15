@@ -13,7 +13,7 @@
     "lat": 44.84057,
     "lng": -0.58149
   },
-  "rating": [4.2]
+  "rating": 4.2
 }, {
   "id": 2,
   "name": "Camelot",
@@ -23,13 +23,13 @@
   "happyEnd": "15:10",
   "price": 3.50,
   "image": "img/camelot.jpg",
-  "mainDrink": "Cocktail",
+  "mainDrinkType": "Cocktail",
   "secondDrinkType": "Beer",
   "position": {
     "lat": 44.83237,
     "lng": -0.57107
   },
-  "rating": [3.8]
+  "rating": 3.8
 }, {
   "id": 3,
   "name": "Titi Twister",
@@ -39,11 +39,11 @@
   "happyEnd": "21:00",
   "price": 3.50,
   "image": "img/titi.jpg",
-  "mainDrink": "Beer",
+  "mainDrinkType": "Beer",
   "secondDrinkType": "Wine",
   "position": {
     "lat": 44.83175,
     "lng": -0.56963
   },
-  "rating": [4.6, 3.9]
+  "rating": 4.6
 }]
