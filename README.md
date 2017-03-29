@@ -27,3 +27,6 @@ __Attention - Utiliser les plateformes Cordova et pas Ionic !__
 
 ``` cordova platform add ios ```
 
+Exécuter ensuite la commande suivante pour appliquer les modifications des droits :
+
+``` cordova prepare ```
