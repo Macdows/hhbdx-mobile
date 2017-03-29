@@ -1,7 +1,6 @@
 angular.module('hhbdxMapCtrl', ['ionic'])
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, $ionicPopup, $state, $http, $ionicPopover,  $cordovaGeolocation, ClosePopupService) {
-  ionic.Platform.ready(function(){
     $ionicLoading.show({
       content: 'Loading',
       animation: 'fade-in',
@@ -45,13 +44,13 @@ angular.module('hhbdxMapCtrl', ['ionic'])
         ClosePopupService.register($scope.myPopup);
       };
 
-       $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
            var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
            var mapOptions = {
                disableDefaultUI: true,
                center: myLatlng,
-               zoom: 16,
-               mapTypeId: google.maps.MapTypeId.TERRAIN
+               zoom: 15,
+               mapTypeId: google.maps.MapTypeId.ROADMAP
            };
            $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
            $scope.markers = [];
@@ -153,5 +152,4 @@ angular.module('hhbdxMapCtrl', ['ionic'])
           }
           this.markers = new Array();
         };
-  })
 });
